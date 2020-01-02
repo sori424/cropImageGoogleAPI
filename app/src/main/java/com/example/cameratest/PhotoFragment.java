@@ -45,6 +45,7 @@ public class PhotoFragment extends Fragment implements SurfaceHolder.Callback {
     SurfaceHolder surfaceHolder;
     boolean previewing = false;
     Context context;
+    String file_name;
 
     @BindView(R.id.preview_layout)
     LinearLayout previewLayout;
@@ -299,8 +300,7 @@ public class PhotoFragment extends Fragment implements SurfaceHolder.Callback {
 
     public void createImageFile(final Bitmap bitmap) {
 
-        File path = context.getExternalFilesDir(
-                Environment.DIRECTORY_PICTURES);
+        File path = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
 
         String timeStamp = new SimpleDateFormat("MMdd_HHmmssSSS").format(new Date());
         String imageFileName = "region_" + timeStamp + ".jpg";
@@ -327,6 +327,7 @@ public class PhotoFragment extends Fragment implements SurfaceHolder.Callback {
                         public void onScanCompleted(String path, Uri uri) {
                             Log.i("ExternalStorage", "Scanned " + path + ":");
                             Log.i("ExternalStorage", "-> uri=" + uri);
+                            file_name = file.getName();
                         }
                     });
             Toast.makeText(context, file.getName(), Toast.LENGTH_SHORT).show();
@@ -337,5 +338,4 @@ public class PhotoFragment extends Fragment implements SurfaceHolder.Callback {
             Log.w("ExternalStorage", "Error writing " + file, e);
         }
     }
-
 }
